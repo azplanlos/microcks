@@ -34,7 +34,7 @@ import java.util.List;
  * Implementation for InvocationLogRepository
  */
 @Repository
-public class InvocationLogRepositoryImpl extends SimpleMongoRepository<InvocationLogEntry, Long>
+public class InvocationLogRepositoryImpl extends SimpleMongoRepository<InvocationLogEntry, String>
       implements InvocationLogRepository {
 
    @Autowired
@@ -54,14 +54,14 @@ public class InvocationLogRepositoryImpl extends SimpleMongoRepository<Invocatio
          }
 
          @Override
-         public Long getId(@NonNull InvocationLogEntry entity) {
-            return entity.getInvocationTimestamp().toInstant().toEpochMilli();
+         public String getId(@NonNull InvocationLogEntry entity) {
+            return String.format("%d-%s", entity.getInvocationTimestamp().toInstant().toEpochMilli(), entity.getRequestId());
          }
 
          @Override
          @NonNull
-         public Class<Long> getIdType() {
-            return Long.class;
+         public Class<String> getIdType() {
+            return String.class;
          }
 
          @Override

@@ -35,6 +35,8 @@ import io.github.microcks.util.el.EvaluableRequest;
 import io.github.microcks.util.script.ScriptEngineBinder;
 import io.github.microcks.service.ServiceStateStore;
 
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.instrumentation.annotations.WithSpan;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -110,6 +112,7 @@ public class RestController {
 
    @RequestMapping(value = "/{service}/{version}/**", method = { RequestMethod.HEAD, RequestMethod.OPTIONS,
          RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH, RequestMethod.DELETE })
+   @WithSpan
    public ResponseEntity<byte[]> execute(@PathVariable("service") String serviceName,
          @PathVariable("version") String version, @RequestParam(value = "delay", required = false) Long delay,
          @RequestBody(required = false) String body, @RequestHeader HttpHeaders headers, HttpServletRequest request,
@@ -278,6 +281,7 @@ public class RestController {
          // Publish an invocation event before returning if enabled.
          if (Boolean.TRUE.equals(enableInvocationStats)) {
             String id = MockControllerCommons.extractId(body, resourcePath, request, operation.getIdPath());
+            Span.current().setAttribute("requestId", id);
             MockControllerCommons.publishMockInvocation(applicationContext, this, service, response, startTime, id);
          }
 

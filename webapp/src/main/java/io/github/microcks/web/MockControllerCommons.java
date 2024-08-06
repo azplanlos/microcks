@@ -366,7 +366,9 @@ public class MockControllerCommons {
     */
    public static String extractId(String requestBody, String requestResourcePath, HttpServletRequest request,
          String idString) {
-      return unguardedRenderResponseContent(buildEvaluableRequest(requestBody, requestResourcePath, request),
-            Collections.emptyMap(), TemplateEngineFactory.getTemplateEngine(), idString);
+      return idString != null
+            ? unguardedRenderResponseContent(buildEvaluableRequest(requestBody, requestResourcePath, request),
+                  Collections.emptyMap(), TemplateEngineFactory.getTemplateEngine(), idString)
+            : null;
    }
 }

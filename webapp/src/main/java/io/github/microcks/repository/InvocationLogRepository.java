@@ -24,7 +24,7 @@ import java.util.List;
  * Repository for InvocationLogEntries
  */
 @NoRepositoryBean
-public interface InvocationLogRepository extends MongoRepository<InvocationLogEntry, Long> {
+public interface InvocationLogRepository extends MongoRepository<InvocationLogEntry, String> {
 
    /**
     * find the latest invocation log entries from database
