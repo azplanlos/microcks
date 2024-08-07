@@ -22,104 +22,114 @@ import java.util.Date;
 
 @Document("invocations")
 public class InvocationLogEntry {
-   @Id
-   private Long timestampEpoch;
-   private String serviceName;
-   /**
+  private String id;
+  private Long timestampEpoch;
+  private String serviceName;
+  /**
    *
    */
-   private String serviceVersion;
-   /**
+  private String serviceVersion;
+  /**
    *
    */
-   private String mockResponse;
-   /**
+  private String mockResponse;
+  /**
    *
    */
-   private Date invocationTimestamp;
-   /**
+  private Date invocationTimestamp;
+  /**
    *
    */
-   private long duration;
-   private String source;
-   private String requestId;
+  private long duration;
+  private String source;
+  private String requestId;
 
-   public InvocationLogEntry(Long timestampEpoch, String serviceName, String serviceVersion, String mockResponse,
-         Date invocationTimestamp, long duration, String source, String requestId) {
-      this.timestampEpoch = timestampEpoch;
-      this.serviceName = serviceName;
-      this.serviceVersion = serviceVersion;
-      this.mockResponse = mockResponse;
-      this.invocationTimestamp = invocationTimestamp;
-      this.duration = duration;
-      this.source = source;
-      this.requestId = requestId;
-   }
+  public InvocationLogEntry(Long timestampEpoch, String serviceName, String serviceVersion, String mockResponse,
+                            Date invocationTimestamp, long duration, String source, String requestId) {
+    this.timestampEpoch = timestampEpoch;
+    this.serviceName = serviceName;
+    this.serviceVersion = serviceVersion;
+    this.mockResponse = mockResponse;
+    this.invocationTimestamp = invocationTimestamp;
+    this.duration = duration;
+    this.source = source;
+    this.requestId = requestId;
+    this.id = String.format("%d-%s", invocationTimestamp.toInstant().toEpochMilli(), requestId);
+  }
 
-   public InvocationLogEntry() {
-   }
+  public InvocationLogEntry() {
+  }
 
-   public Long getTimestampEpoch() {
-      return timestampEpoch;
-   }
+  public Long getTimestampEpoch() {
+    return timestampEpoch;
+  }
 
-   public void setTimestampEpoch(Long timestampEpoch) {
-      this.timestampEpoch = timestampEpoch;
-   }
+  public void setTimestampEpoch(Long timestampEpoch) {
+    this.timestampEpoch = timestampEpoch;
+  }
 
-   public String getServiceName() {
-      return serviceName;
-   }
+  public String getServiceName() {
+    return serviceName;
+  }
 
-   public void setServiceName(String serviceName) {
-      this.serviceName = serviceName;
-   }
+  public void setServiceName(String serviceName) {
+    this.serviceName = serviceName;
+  }
 
-   public String getServiceVersion() {
-      return serviceVersion;
-   }
+  public String getServiceVersion() {
+    return serviceVersion;
+  }
 
-   public void setServiceVersion(String serviceVersion) {
-      this.serviceVersion = serviceVersion;
-   }
+  public void setServiceVersion(String serviceVersion) {
+    this.serviceVersion = serviceVersion;
+  }
 
-   public String getMockResponse() {
-      return mockResponse;
-   }
+  public String getMockResponse() {
+    return mockResponse;
+  }
 
-   public void setMockResponse(String mockResponse) {
-      this.mockResponse = mockResponse;
-   }
+  public void setMockResponse(String mockResponse) {
+    this.mockResponse = mockResponse;
+  }
 
-   public Date getInvocationTimestamp() {
-      return invocationTimestamp;
-   }
+  public Date getInvocationTimestamp() {
+    return invocationTimestamp;
+  }
 
-   public void setInvocationTimestamp(Date invocationTimestamp) {
-      this.invocationTimestamp = invocationTimestamp;
-   }
+  public void setInvocationTimestamp(Date invocationTimestamp) {
+    this.invocationTimestamp = invocationTimestamp;
+  }
 
-   public long getDuration() {
-      return duration;
-   }
+  public long getDuration() {
+    return duration;
+  }
 
-   public void setDuration(long duration) {
-      this.duration = duration;
-   }
+  public void setDuration(long duration) {
+    this.duration = duration;
+  }
 
-   public String getSource() {
-      return source;
-   }
+  public String getSource() {
+    return source;
+  }
 
-   public void setSource(String source) {
-      this.source = source;
-   }
+  public void setSource(String source) {
+    this.source = source;
+  }
 
-   public String getRequestId() {
-      return requestId;
-   }
+  public String getRequestId() {
+    return requestId;
+  }
 
-   public void setRequestId(String requestId) {
-      this.requestId = requestId;
-   }
+  public void setRequestId(String requestId) {
+    this.requestId = requestId;
+  }
+
+  @Id
+  public String getId() {
+    return String.format("%d-%s", invocationTimestamp.toInstant().toEpochMilli(), requestId);
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
 }
